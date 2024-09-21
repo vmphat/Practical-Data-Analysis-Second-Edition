@@ -1,19 +1,33 @@
-from bs4 import BeautifulSoup
-import urllib.request
-from time import sleep
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from datetime import datetime
-
-def getGoldPrice():
-    url = "http://gold.org"
-    req = urllib.request.urlopen(url)
-    page = req.read()
-    scraping = BeautifulSoup(page)
-    price = scraping.findAll("td",attrs={"id":"spotpriceCellAsk"})[0].text
-    return price
+import time
 
 
-with open("goldPrice.out","w") as f:
-    for x in range(0,10):
-        sNow = datetime.now().strftime("%I:%M:%S%p")
-        f.write("{0}, {1} \n ".format(sNow, getGoldPrice()))
-        sleep(1)
+service = Service()
+driver = webdriver.Chrome(service=service)
+
+driver.get("https://www.gold.org/")
+WebDriverWait(driver, 10).until(
+    EC.presence_of_element_located((By.CLASS_NAME, "value"))
+)
+
+with open("goldPrice.out", "w") as f:
+    for _ in range(10):
+        date_time: str = datetime.now() \
+                                 .strftime("%Y-%m-%d %I:%M:%S%P")
+        gold_price: str = driver \
+            .find_element(By.CLASS_NAME, "value") \
+            .text.replace(",", "")
+
+        # Write to file
+        f.write(f"{date_time} {gold_price}\n")
+        # Print to console
+        print(date_time, gold_price)
+
+        time.sleep(59.9)
+
+driver.quit()
