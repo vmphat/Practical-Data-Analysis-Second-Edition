@@ -26,7 +26,7 @@ var x = d3.time.scale()
     .range([0, 1000]);
 
 var y = d3.scale.linear()
-    .range([500, 0]);
+    .range([550, 0]);
 
 var color = d3.scale.ordinal()
     .range(["#04B486", "#0033CC", "#CC3300"]);
@@ -47,12 +47,13 @@ var line = d3.svg.line()
 
 var svg = d3.select("body").append("svg")
     .attr("width", 1100)
-    .attr("height", 550)
+    .attr("height", 600)
   .append("g")
-    .attr("transform", "translate(20,50)");
+    .attr("transform", "translate(50,20)");
 
 d3.csv("multiLine.csv", function(error, data) {
-  color.domain(d3.keys(data[0]).filter(function(key) { return key !== "date"; }));
+  color.domain(d3.keys(data[0]).filter(
+    function(key) { return key !== "date"; }));
 
   data.forEach(function(d) {
     d.date = parseDate(d.date);
@@ -91,14 +92,14 @@ d3.csv("multiLine.csv", function(error, data) {
 
   country.append("path")
       .attr("class", "line")
-	  .attr("d", function(d) { return line(d.values); })
+	    .attr("d", function(d) { return line(d.values); })
       .style("stroke", function(d) { return color(d.name); });
 
   country.append("text")
       .datum(function(d) { return {name: d.name, value: d.values[d.values.length - 1]}; })
       .attr("transform", function(d) { return "translate(" + x(d.value.date) + "," + y(d.value.currency) + ")"; })
       .attr("x", 10)
-	  .attr("y", 20)
+	    .attr("y", 20)
       .attr("dy", ".50em")
       .text(function(d) { return d.name; });
 });

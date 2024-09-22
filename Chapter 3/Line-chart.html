@@ -29,7 +29,7 @@ var x = d3.time.scale()
     .range([0, 1000]);
 
 var y = d3.scale.linear()
-    .range([500, 0]);
+    .range([550, 0]);
 
 var xAxis = d3.svg.axis()
     .scale(x)
@@ -45,9 +45,9 @@ var line = d3.svg.line()
 
 var svg = d3.select("body").append("svg")
     .attr("width", 1100)
-    .attr("height", 550)
+    .attr("height", 600)
   .append("g")
-    .attr("transform", "translate(20,50)");
+    .attr("transform", "translate(50,20)");
 
 d3.csv("line.csv", function(error, data) {
   data.forEach(function(d) {

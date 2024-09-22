@@ -51,7 +51,7 @@ var svg = d3.select("body").append("svg")
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-d3.csv("pokemonByType.csv", function(error, data) {
+d3.csv("./sumPokemon.csv", function(error, data) {
 
   data.forEach(function(d) {
     d.amount = +d.amount;
