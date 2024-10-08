@@ -6,7 +6,7 @@
 	<body>
 		<script type="text/javascript">
 
-			var w = 800;
+			var w = 600;
 			var h = 600;
 			
 			var grid = [];
@@ -14,7 +14,7 @@
 			var colors = ["", "#F8F8F8", "#FF6633","000066"];
 			var index = 0;
 			var cols = 15;
-			var rows =15;
+			var rows = 15;
 			var nTimes = 0;
 			var gridSize = (cols * rows);
 			
@@ -23,11 +23,10 @@
 			var timeRecover = 100;
 			var initialInfected = 10;
 			var tProb = 0.2;
-					
 			
 			
-			for(var i=0; i <rows; i++ ){
-				for(var j=0;j<cols;j++){
+			for(var i=0; i < rows; i++) {
+				for(var j=0; j < cols; j++) {
 					grid.push([i*40, j*40, "circle-"+index++, 1, 0]);
 				}
 			}
@@ -40,8 +39,7 @@
 					  .append("g")
 						.attr("transform", "translate(20,20)");
 
-			
-						
+
 			svg.selectAll("circle")
 			   .data(grid)
 			   .enter()
@@ -61,11 +59,12 @@
 			   .attr("fill", colors[1])
 			   .attr("stroke", "#666");
 
-		function init(){	   
-			 for(var x = 0; x < initialInfected; x++ ){
+
+		function init() {	   
+			 for(var x = 0; x < initialInfected; x++) {
 				var i = Math.round(Math.random() * (gridSize-1));
 				var cell = grid[i];
-				if(cell[3]==1){
+				if(cell[3] == 1) {
 					cell[3] = 2;
 					cell[4] = timeInfection;
 				}
@@ -76,8 +75,6 @@
 					
 		init();	 
 					 
-		
-		
 			
 		function update(){	 
 					
