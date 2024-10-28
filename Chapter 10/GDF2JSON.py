@@ -3,26 +3,26 @@ import json
 from io import StringIO
 
 nodes = np.genfromtxt("nodes.csv", dtype='object', delimiter=',', skip_header=1,
-                     usecols=(0,1,3))
+                      usecols=(0, 1, 3))
 
 links = np.genfromtxt("links.csv", dtype='object', delimiter=',', skip_header=1,
-                     usecols=(0,1))
+                      usecols=(0, 1))
 
 for n in range(len(nodes)):
     for ls in range(len(links)):
         if nodes[n][0] == links[ls][0]:
             links[ls][0] = n
-        
+
         if nodes[n][0] == links[ls][1]:
             links[ls][1] = n
-data ={}
+data = {}
 
 lst = []
 for x in nodes:
     d = {}
-    d["name"] = str(x[1]).replace("b'","").replace("'","")
+    d["name"] = str(x[1]).replace("b'", "").replace("'", "")
     lst.append(d)
-        
+
 data["nodes"] = lst
 
 lnks = []
@@ -35,12 +35,5 @@ for ls in links:
 
 data["links"] = lnks
 
-with open("newJson.json","w") as f:    
+with open("newJson.json", "w") as f:
     f.write(json.dumps(data))
-
-
-
-
-
-
-
